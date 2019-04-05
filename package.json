@@ -1,0 +1,22 @@
+{
+  "name": "gohanbot",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/Code.ts",
+  "scripts": {
+    "push": "clasp push",
+    "login": "clasp login"
+  },
+  "keywords": [],
+  "author": "nagoshi <t_nagoshi@timedia.co.jp>",
+  "license": "MIT",
+  "devDependencies": {
+    "@google/clasp": "^2.1.0",
+    "prettier": "1.16.4",
+    "tslint": "^5.15.0"
+  },
+  "dependencies": {
+    "@types/google-apps-script": "0.0.42"
+  },
+  "private": true
+}
