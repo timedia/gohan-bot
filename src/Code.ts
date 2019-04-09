@@ -159,12 +159,16 @@ function main() {
     'ご飯行きましょう!!',
     'ドーモ オセワニナリマス 食事の時間だ :ninja:'
   ];
+
+  const do_get = _prop.getProperty("DO_GET_METHOD");
+  const code_url = _prop.getProperty("CODE_URL");
   const message = `
 ${random_array(msg_arr)}
 <https://open.vein.space/#/invite?token=a34206d0-4a3b-11e9-a5a3-ebf91e154abd|PR 社内はてなサービス veinログインしてね!!!!>
 ${rows.join('\n')}
 <https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit|候補を編集する>
-<https://script.google.com/macros/s/AKfycbzk4Op_FnViYA9lMo7uvnerz8PTY2l-8i4ZJCkfzM3TYxB59uk/exec|ガチャを回す>
+<${do_get}|ガチャを回す>
+( <${code_url}|Code> <https://github.com/timedia/gohan-bot|:github:> )
 `;
   post_message(message, SLACK_WEBHOOK);
   return message;
