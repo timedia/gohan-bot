@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/Code.ts",
   "scripts": {
+    "build": "webpack",
     "push": "clasp push",
     "login": "clasp login"
   },
