@@ -55,7 +55,7 @@ function get_rain(): string {
 
 // 分指定でトリガー出来ないので、一旦ここでトリガーをセット
 // cf. https://qiita.com/sumi-engraphia/items/465dd027e17f44da4d6a
-function set_trigger() {
+export function set_trigger() {
     const triggerDay = new Date();
     if (is_businessday(triggerDay)) {
         triggerDay.setHours(LUNCH_HOUR);

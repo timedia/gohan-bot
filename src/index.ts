@@ -1,11 +1,10 @@
 import "core-js/stable"
-import { do_get } from './Code';
+import { do_get, set_trigger } from './Code';
 
 
 declare const global: {
     [x: string]: any;
 }
 
-global.doGet = (e: any) => {
-    return do_get(e)
-}
+global.doGet = do_get;
+global.set_trigger = (e: any) => set_trigger;
