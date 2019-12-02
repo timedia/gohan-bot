@@ -1,6 +1,10 @@
-var MAX_RANK = 1000;
-var SRC_SHEET_NAME = 'シート1';
-var RANK_SHEETNAME = 'rank';
+import {
+    SHEET_ID
+} from './Property';
+
+const MAX_RANK = 1000;
+const SRC_SHEET_NAME = 'シート1';
+const RANK_SHEETNAME = 'rank';
 
 //example
 /// RandomPickerPre()

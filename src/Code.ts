@@ -1,10 +1,22 @@
-import { RandomPickCommit, RandomPickSafe, RandomPickerPre, RandomPickerPost } from './RandomPicker';
-
-const _prop = PropertiesService.getScriptProperties();
-const SLACK_WEBHOOK = _prop.getProperty('SLACK_WEBHOOK');
-const SLACK_CHANNEL = _prop.getProperty('SLACK_CHANNEL');
-const YAHOO_API = _prop.getProperty('YAHOO_API');
-const SHEET_ID = _prop.getProperty('SHEET_ID');
+import {
+    RandomPickCommit,
+    RandomPickSafe,
+    RandomPickerPre,
+    RandomPickerPost
+} from './RandomPicker';
+import {
+    SLACK_WEBHOOK,
+    SLACK_CHANNEL,
+    YAHOO_API,
+    SHEET_ID,
+    ONE,
+    TWO,
+    THREE,
+    RAIN,
+    DO_GET,
+    CODE_URL,
+    MESSAGE
+} from './Property';
 
 const EMOJI_ICON = ':rice_ball:';
 const BOT_NAME = 'ごはんbotV2';
@@ -12,6 +24,12 @@ const LUNCH_HOUR = 12;
 const LUNCH_MINUTE = 25;
 
 
+// slackからガチャを回す用
+export function do_get(e: any): any {
+    main();
+    const response = HtmlService.createHtmlOutput();
+    return response;
+}
 
 function get_weather() {
     const request = UrlFetchApp.fetch(YAHOO_API);
@@ -34,12 +52,6 @@ function get_rain(): string {
     return 'no';
 }
 
-// slackからガチャを回す用
-function do_get(e): any {
-    main();
-    const response = HtmlService.createHtmlOutput();
-    return response;
-}
 
 // 分指定でトリガー出来ないので、一旦ここでトリガーをセット
 // cf. https://qiita.com/sumi-engraphia/items/465dd027e17f44da4d6a
@@ -70,13 +82,13 @@ function is_businessday(date: Date): boolean {
 
 const deleteTrigger = () => {
     const triggers = ScriptApp.getProjectTriggers();
-    for (const tri of triggers) {
-        // for (let i = 0; i < triggers.length; i++) {
+    for (let i = 0; i < triggers.length; i++) {
+        const tri = triggers[i];
         if (tri.getHandlerFunction() === 'choice') {
             ScriptApp.deleteTrigger(tri);
         }
     }
-}
+};
 
 function random_array<T>(arr: Array<T>): T {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -106,13 +118,13 @@ function post_message(message: string, hookPoint: string) {
     return false;
 }
 
-function get_category(category, weather) {
+function get_category(category: number, weather: string) {
     const RAIN_CATEGORY = 4;
-    if (weather == 'weak') {
+    if (weather === 'weak') {
         if (category > 1) {
             return RAIN_CATEGORY;
         }
-    } else if (weather == 'strong') {
+    } else if (weather === 'strong') {
         return RAIN_CATEGORY;
     }
     return category;
@@ -122,19 +134,19 @@ function main() {
     deleteTrigger();
 
     const category_mark = {
-        1: ':one:',
-        2: ':two:',
-        3: ':three:',
-        4: ':rain:'
+        1: ONE,
+        2: TWO,
+        3: THREE,
+        4: RAIN
     };
 
-    const sp = SpreadsheetApp.openById(SHEET_ID);
-    var sheet = sp.getSheetByName('シート1');
+    // const sp = SpreadsheetApp.openById(SHEET_ID);
+    // var sheet = sp.getSheetByName('シート1');
 
     var rain = get_rain();
 
     RandomPickerPre();
-    var rows = [];
+    let rows: any[] = [];
     for (var i = 0; i < 3; i++) {
         var ctgy = get_category(i + 1, rain);
         while (true) {
@@ -160,15 +172,13 @@ function main() {
         'ドーモ オセワニナリマス 食事の時間だ :ninja:'
     ];
 
-    const do_get = _prop.getProperty("DO_GET_METHOD");
-    const code_url = _prop.getProperty("CODE_URL");
     const message = `
 ${random_array(msg_arr)}
-<https://open.vein.space/#/invite?token=a34206d0-4a3b-11e9-a5a3-ebf91e154abd|PR 社内はてなサービス veinログインしてね!!!!>
+${MESSAGE}
 ${rows.join('\n')}
 <https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit|候補を編集する>
-<${do_get}|ガチャを回す>
-( <${code_url}|Code> <https://github.com/timedia/gohan-bot|:github:> )
+<${DO_GET}|ガチャを回す>
+( <${CODE_URL}|Code> <https://github.com/timedia/gohan-bot|:github:> )
 `;
     post_message(message, SLACK_WEBHOOK);
     return message;
