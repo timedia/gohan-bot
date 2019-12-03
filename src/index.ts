@@ -1,5 +1,5 @@
 import "core-js/stable"
-import { do_get, set_trigger } from './Code';
+import { do_get, set_trigger, main } from './Code';
 
 
 declare const global: {
@@ -7,4 +7,5 @@ declare const global: {
 }
 
 global.doGet = do_get;
-global.set_trigger = (e: any) => set_trigger;
+global.set_trigger = (e: any) => { set_trigger() };
+global.main = (e: any) => { main() };

@@ -130,7 +130,7 @@ function get_category(category: number, weather: string) {
     return category;
 }
 
-function main() {
+export function main() {
     deleteTrigger();
 
     const category_mark = {
