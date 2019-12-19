@@ -19,7 +19,6 @@ const BOT_NAME = 'ごはんbotV2';
 const LUNCH_HOUR = 12;
 const LUNCH_MINUTE = 25;
 
-
 // slackからガチャを回す用
 export function do_get(e: any): any {
     main();
@@ -113,7 +112,9 @@ function post_message(message: string, hookPoint: string) {
     return false;
 }
 
-function get_category(category: number, weather: string) {
+type Category = 1 | 2 | 3 | 4;
+
+function get_category(category: Category, weather: string): Category {
     const RAIN_CATEGORY = 4;
     if (weather === 'weak') {
         if (category > 1) {
@@ -128,7 +129,7 @@ function get_category(category: number, weather: string) {
 export function main() {
     deleteTrigger();
 
-    const category_mark = {
+    const category_mark: { [key in Category]: string } = {
         1: ':one:',
         2: ':two:',
         3: ':three:',
@@ -137,16 +138,16 @@ export function main() {
 
     // const sp = SpreadsheetApp.openById(SHEET_ID);
     // var sheet = sp.getSheetByName('シート1');
-
-    var rain = get_rain();
+    const rain = get_rain();
 
     RandomPickerPre();
     let rows: any[] = [];
-    for (var i = 0; i < 3; i++) {
-        var ctgy = get_category(i + 1, rain);
+    const cate_arr: Category[] = [1, 2, 3];
+    for (let i of cate_arr) {
+        const ctgy = get_category(i, rain);
         while (true) {
-            var r = RandomPickSafe(ctgy);
-            var val = r[1][0];
+            const r = RandomPickSafe(ctgy);
+            const val = r[1][0];
             if (!rows.includes(val)) {
                 rows.push(category_mark[ctgy] + ' ' + val);
                 RandomPickCommit(ctgy, r[0]);
@@ -156,7 +157,7 @@ export function main() {
     }
     RandomPickerPost();
 
-    var msg_arr = [
+    const msg_arr = [
         'そろそろランチにしませんか?',
         'ランチの時間ですよ！',
         '今日のおすすめはこちらです。',
