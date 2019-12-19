@@ -2,7 +2,7 @@ import {
     RandomPickCommit,
     RandomPickSafe,
     RandomPickerPre,
-    RandomPickerPost
+    RandomPickerPost,
 } from './RandomPicker';
 import {
     SLACK_WEBHOOK,
@@ -36,7 +36,7 @@ function get_weather() {
 function get_rain(): string {
     const weatherData = get_weather();
     const rain = JSON.parse(
-        weatherData.Feature[0].Property.WeatherList.Weather[0].Rainfall
+        weatherData.Feature[0].Property.WeatherList.Weather[0].Rainfall,
     ); // observationのrainfallを取る
     if (rain < 0.1) {
         return 'no';
@@ -47,7 +47,6 @@ function get_rain(): string {
     }
     return 'no';
 }
-
 
 // 分指定でトリガー出来ないので、一旦ここでトリガーをセット
 // cf. https://qiita.com/sumi-engraphia/items/465dd027e17f44da4d6a
@@ -68,7 +67,7 @@ function is_businessday(date: Date): boolean {
         return false;
     }
     const calJa = CalendarApp.getCalendarById(
-        'ja.japanese#holiday@group.v.calendar.google.com'
+        'ja.japanese#holiday@group.v.calendar.google.com',
     );
     if (calJa.getEventsForDay(date).length > 0) {
         return false;
@@ -95,14 +94,14 @@ function post_message(message: string, hookPoint: string) {
         text: message,
         icon_emoji: EMOJI_ICON,
         username: BOT_NAME,
-        channel: SLACK_CHANNEL
+        channel: SLACK_CHANNEL,
     };
     const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
         method: 'post',
         payload: JSON.stringify(payload),
         headers: {
-            'Content-type': 'application/json'
-        }
+            'Content-type': 'application/json',
+        },
     };
     const response = UrlFetchApp.fetch(hookPoint, options);
 
@@ -165,7 +164,7 @@ export function main() {
         'お昼です！',
         'お昼の時間です！',
         'ご飯行きましょう!!',
-        'ドーモ オセワニナリマス 食事の時間だ :ninja:'
+        'ドーモ オセワニナリマス 食事の時間だ :ninja:',
     ];
 
     const message = `

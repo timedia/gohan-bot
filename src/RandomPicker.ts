@@ -1,6 +1,4 @@
-import {
-    SHEET_ID
-} from './Property';
+import { SHEET_ID } from './Property';
 
 const MAX_RANK = 1000;
 const SRC_SHEET_NAME = 'シート1';
@@ -39,7 +37,7 @@ function WriteRanks() {
     sheet.getRange(1, 7, sheet.getLastRow(), 1).setValues(
         vs.map((x: object[]) => {
             return [RankFunction(x[0], x[1])];
-        })
+        }),
     );
 }
 
@@ -71,8 +69,8 @@ function GetRow(row: number, destructive: boolean): any {
                 (x: number[]): number[] => {
                     x[0] *= 0.9;
                     return x;
-                }
-            )
+                },
+            ),
         );
     }
     return vals[0];
@@ -156,7 +154,7 @@ function Bisect(
     target: number,
     arr: number[],
     begin: number,
-    end: number
+    end: number,
 ): number {
     const mid = Math.floor((begin + end) / 2);
     if (begin >= mid) {
@@ -382,6 +380,6 @@ if (!Array.prototype.includes) {
 
             // 8. Return false
             return false;
-        }
+        },
     });
 }

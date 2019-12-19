@@ -8,11 +8,11 @@ export const CODE_URL = getProp('CODE_URL');
 export const MESSAGE = getProp('MESSAGE');
 
 function getProp(name: string): string {
-  const prop = PropertiesService.getScriptProperties();
-  const ret = prop.getProperty(name);
-  if (ret === null) {
-    Logger.log(`property: ${name} が定義されていない`);
-    throw new Error();
-  }
-  return ret;
+    const prop = PropertiesService.getScriptProperties();
+    const ret = prop.getProperty(name);
+    if (ret === null) {
+        Logger.log(`property: ${name} が定義されていない`);
+        throw new Error();
+    }
+    return ret;
 }
