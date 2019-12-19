@@ -9,13 +9,9 @@ import {
     SLACK_CHANNEL,
     YAHOO_API,
     SHEET_ID,
-    ONE,
-    TWO,
-    THREE,
-    RAIN,
     DO_GET,
     CODE_URL,
-    MESSAGE
+    MESSAGE,
 } from './Property';
 
 const EMOJI_ICON = ':rice_ball:';
@@ -134,10 +130,10 @@ export function main() {
     deleteTrigger();
 
     const category_mark = {
-        1: ONE,
-        2: TWO,
-        3: THREE,
-        4: RAIN
+        1: ':one:',
+        2: ':two:',
+        3: ':three:',
+        4: ':rain_cloud:',
     };
 
     // const sp = SpreadsheetApp.openById(SHEET_ID);
